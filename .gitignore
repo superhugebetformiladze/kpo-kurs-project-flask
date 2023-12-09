@@ -1,0 +1,61 @@
+# Виртуальное окружение
+venv/
+
+# Файлы настроек окружения
+.env
+
+# Кэш и временные файлы
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+
+# Файлы базы данных SQLite
+*.sqlite
+*.db
+
+# Файлы миграций Flask-Migrate
+/migrations/
+
+# Файлы журналов и логов
+logs/
+*.log
+
+# Файлы конфигурации
+instance/
+
+# Сгенерированные файлы и папки
+dist/
+build/
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.db-shm
+*.db-wal
+*.pyc
+
+# Файлы среды разработки и IDE
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+*.swo
+*.tmp
+*.bak
+*.cache
+*.log
+*.orig
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite
+*.db-shm
+*.db-wal
+*.sublime-workspace
+*.sublime-project
