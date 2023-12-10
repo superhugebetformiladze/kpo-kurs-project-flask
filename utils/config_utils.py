@@ -1,9 +1,11 @@
 import os
 import configparser
 
+
 def get_db_config():
-    # config_path = os.path.join(os.path.dirname(__file__), 'config', 'config.cfg')
-    config_path = 'D:\учебный\кпо\курсовая\kpo-kurs-flask\kpo-kurs-project-flask\config\config.cfg'
+    current_directory = os.path.dirname(os.path.realpath(__file__))
+    config_path = os.path.join(current_directory, '..', 'config', 'config.cfg')
+
     config = configparser.ConfigParser()
     config.read(config_path)
 

@@ -3,6 +3,14 @@ import random
 
 import psycopg2
 
+import sys
+import os
+current_directory = os.path.dirname(os.path.realpath(__file__))
+root_directory = os.path.abspath(os.path.join(current_directory, '..'))
+sys.path.append(root_directory)
+
+from utils.database_utils import create_connection
+
 fake = Faker()
 
 def generate_service_data(service_id):
@@ -37,34 +45,23 @@ def generate_service_data(service_id):
 
     return service_data
 
-def insert_services_data(db_config, num_services):
+def insert_services_data(num_services):
     try:
-        connection = psycopg2.connect(
-            host=db_config['host'],
-            database=db_config['database'],
-            user=db_config['user'],
-            password=db_config['password']
-        )
-        connection.autocommit = True
-
-        cursor = connection.cursor()
-
-        for service_id in range(1, num_services + 1):
-            service_data = generate_service_data(service_id)
-            cursor.execute('''
-                INSERT INTO services (service_id, service_name, description, additional_info, price, image)
-                VALUES (%s, %s, %s, %s, %s, %s)
-            ''', (
-                service_data['service_id'],
-                service_data['service_name'],
-                service_data['description'],
-                service_data['additional_info'],
-                service_data['price'],
-                service_data['image']
-            ))
-
-        cursor.close()
-        connection.close()
+        with create_connection() as connection:
+            with connection.cursor() as cursor:
+                for service_id in range(1, num_services + 1):
+                    service_data = generate_service_data(service_id)
+                    cursor.execute('''
+                        INSERT INTO services (service_id, service_name, description, additional_info, price, image)
+                        VALUES (%s, %s, %s, %s, %s, %s)
+                    ''', (
+                        service_data['service_id'],
+                        service_data['service_name'],
+                        service_data['description'],
+                        service_data['additional_info'],
+                        service_data['price'],
+                        service_data['image']
+                    ))
 
         print(f"{num_services} данные успешно добавлены в таблицу services.")
     except psycopg2.Error as e:
