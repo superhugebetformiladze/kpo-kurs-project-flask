@@ -16,6 +16,7 @@ fake = Faker()
 def generate_service_data(service_id):
     # Предопределенные значения для генерации
     service_names = ["Мойка", "Замена масла", "Шиномонтаж", "Ремонт тормозов", "Диагностика двигателя"]
+    image_names = ["diagnostika-avtomobilya", "Kompyuternaya-diagnostika", "kuzovnoy-remont", "shod-razval", "zamena-masla"]
     additional_infos = [
         "Бесконтактная мойка с применением новейших технологий.",
         "Замена масла с использованием высококачественных масел и фильтров.",
@@ -25,13 +26,14 @@ def generate_service_data(service_id):
     ]
 
     service_name = random.choice(service_names)
+    image_name = random.choice(image_names)
     additional_info = random.choice(additional_infos)
     
     description = (
         f"Наш техцентр предлагает услугу {service_name.lower()}. {additional_info}"
     )
 
-    image = f"services/{service_name.lower()}.jpg"
+    image = f"\static/images/client/services/{image_name.lower()}.jpg"
     price = random.randint(500, 3000)
 
     service_data = {

@@ -1,4 +1,11 @@
 import psycopg2
+
+import sys
+import os
+current_directory = os.path.dirname(os.path.realpath(__file__))
+root_directory = os.path.abspath(os.path.join(current_directory, '..'))
+sys.path.append(root_directory)
+
 from utils.database_utils import create_connection
 
 def read_services():

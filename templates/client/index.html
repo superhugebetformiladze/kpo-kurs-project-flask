@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+<header class="header">
+    <div class="overlay">
+        <div class="container">
+            <div class="description">
+                TechCenter - сертифицированный автосервис в Ульяновске с полным спектром услуг по обслуживанию и ремонту автомобилей
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Описание компании -->
+<div class="container mb-4">
+    <section id="about" style="padding-top: 56px;">
+        <h2>О компании</h2>
+        <p>TechCenter - это автосервис, который объединяет в себе профессионализм, передовые технологии и выдающееся обслуживание, чтобы обеспечить владельцам автомобилей наилучший опыт в уходе за своими транспортными средствами.
+            Наши ценности:
+            <br><br>Профессиональное обслуживание: Мы имеем опытных и квалифицированных мастеров, способных работать с различными марками и моделями автомобилей. Мы стремимся к высшему стандарту качества во всем, что делаем.
+            <br><br>Технологический подход: TechCenter постоянно инвестирует в современные технологии и оборудование, чтобы обеспечить точность и эффективность при проведении работ.
+            <br><br>Индивидуальный подход: Мы понимаем, что каждый автомобиль и каждый клиент уникален. Мы предоставляем индивидуальные решения и рекомендации, чтобы удовлетворить потребности каждого клиента.
+        </p>
+    </section>
+
+    <!-- Список товаров в виде карточек -->
+    <section id="services" style="padding-top: 56px;">
+        <h2>Услуги</h2>
+        <a href="#"><h2>Посмотреть все</h2></a>
+        <div class="row">
+            {% for service in services %}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <a href="{{ url_for('client.service_detail', service_id=service[0]) }}">
+                    <div class="card">
+                        <div class="image-container">
+                            <img src="{{ service[5] }}" class="card-img-top img-zoom">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ service[1] }}</h5>
+                            <p class="card-text">{{ service[2] }}</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+</div>
+    
+{% endblock %}
