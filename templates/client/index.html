@@ -26,7 +26,7 @@
     <!-- Список товаров в виде карточек -->
     <section id="services" style="padding-top: 56px;">
         <h2>Услуги</h2>
-        <a href="#"><h2>Посмотреть все</h2></a>
+        <a href="{{ url_for('client.services') }}"><h2>Посмотреть все</h2></a>
         <div class="row">
             {% for service in services %}
             <div class="col-lg-4 col-md-6 mb-4">

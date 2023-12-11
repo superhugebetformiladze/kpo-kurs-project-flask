@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="{{ url_for('client.index') }}">TechCenter</a>
+    </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4 mb-4">
+    <section>
+        <h2>Услуги</h2>
+        <div class="row">
+            {% for service in services %}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <a href="{{ url_for('client.service_detail', service_id=service[0]) }}">
+                    <div class="card">
+                        <div class="image-container">
+                            <img src="{{ service[5] }}" class="card-img-top img-zoom">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ service[1] }}</h5>
+                            <p class="card-text">{{ service[2] }}</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+</div>
+
+{% endblock %}

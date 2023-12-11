@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="{{ url_for('client.index') }}">TechCenter</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" data-value="services" href="{{ url_for('client.services') }}">Услуги</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <img src="{{ service[4] }}" class="img-fluid">
+        </div>
+        <div class="col-md-6">
+            <h1>{{ service[0] }}</h1>
+            <p>{{ service[1] }}</p>
+            <p>{{ service[2] }}</p>
+            <p>Цена: {{ service[3] }}</p>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <a href="{{ url_for('client.services') }}"><h2>Все услуги</h2></a>
+    <div class="row">
+        {% for service in services %}
+        <div class="col-lg-4 col-md-6 mb-4">
+            <a href="{{ url_for('client.service_detail', service_id=service[0]) }}">
+                <div class="card">
+                    <div class="image-container">
+                        <img src="{{ service[5] }}" class="card-img-top img-zoom">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ service[1] }}</h5>
+                        <p class="card-text">{{ service[2] }}</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
