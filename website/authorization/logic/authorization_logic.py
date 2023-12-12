@@ -29,7 +29,7 @@ def check_password(hashed_password, user_password):
     )
 
 
-def create_user(login, password):
+def create_user(login, password, is_admin=False):
     try:
         with create_connection() as connection:
             with connection.cursor() as cursor:
@@ -38,7 +38,7 @@ def create_user(login, password):
                     INSERT INTO users (login, password, is_admin)
                     VALUES (%s, %s, %s)
                 """,
-                    (login, password, False),
+                    (login, password, is_admin),
                 )
 
         print("Пользователь успешно создан.")

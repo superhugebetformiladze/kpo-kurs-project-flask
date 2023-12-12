@@ -20,6 +20,9 @@
     {% else %}
         <p>Данные пользователя недоступны.</p>
     {% endif %}
+    <a href="{{ url_for('auth.logout') }}">
+        <button type="button" class="btn btn-primary">Выход</button>
+    </a>
 </div>
 
 {% endblock %}

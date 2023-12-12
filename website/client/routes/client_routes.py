@@ -41,13 +41,12 @@ def services():
 
 @client_bp.route('/profile')
 def profile():
-    if current_user.is_authenticated:
-        user_info = {
-            'login': current_user.get_id(),
-            'is_admin': current_user.is_admin
-        }
-        return render_template('client/profile.html', user_info)
-    return render_template('client/profile.html', user_info=None)
+    user_info = {
+        'login': current_user.get_id(),
+        'is_admin': current_user.is_admin
+    }
+    print(user_info)
+    return render_template('client/profile.html', user_info=user_info)
 
 
 

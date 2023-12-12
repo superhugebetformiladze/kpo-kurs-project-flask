@@ -3,7 +3,7 @@ from flask import Blueprint, redirect, render_template, request, url_for
 import sys
 import os
 
-from flask_login import LoginManager, login_user, logout_user
+from flask_login import LoginManager, current_user, login_user, logout_user
 
 current_directory = os.path.dirname(os.path.realpath(__file__))
 root_directory = os.path.abspath(os.path.join(current_directory, '..'))
@@ -48,7 +48,12 @@ def login():
             user = User(login)
             login_user(user)
             print("Успешный вход")
-            return redirect('/admin')
+            user_info = {
+                'login': current_user.get_id(),
+                'is_admin': current_user.is_admin
+            }
+            print(user_info)
+            return redirect('/')
         else:
             error_message = 'Неверные учетные данные. Пожалуйста, попробуйте снова.'
             return render_template('login.html', error=error_message)

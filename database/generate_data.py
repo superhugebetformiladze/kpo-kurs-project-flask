@@ -10,6 +10,7 @@ root_directory = os.path.abspath(os.path.join(current_directory, '..'))
 sys.path.append(root_directory)
 
 from utils.database_utils import create_connection
+from website.authorization.logic.authorization_logic import create_user, hash_password
 
 fake = Faker()
 
@@ -74,7 +75,9 @@ def generate_admin_data():
         'is_admin': True
     }
 
-    return admin_data
+    hashed_password = hash_password(admin_data['password'])
+
+    create_user(admin_data['login'], hashed_password, admin_data['is_admin'])
 
 def insert_admin_data():
     try:
