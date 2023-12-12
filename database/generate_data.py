@@ -13,7 +13,7 @@ from utils.database_utils import create_connection
 
 fake = Faker()
 
-def generate_service_data(service_id):
+def generate_service_data():
     # Предопределенные значения для генерации
     service_names = ["Мойка", "Замена масла", "Шиномонтаж", "Ремонт тормозов", "Диагностика двигателя"]
     image_names = ["diagnostika-avtomobilya", "Kompyuternaya-diagnostika", "kuzovnoy-remont", "shod-razval", "zamena-masla"]
@@ -37,7 +37,6 @@ def generate_service_data(service_id):
     price = random.randint(500, 3000)
 
     service_data = {
-        'service_id': service_id,
         'service_name': service_name,
         'description': description,
         'additional_info': additional_info,
@@ -51,13 +50,12 @@ def insert_services_data(num_services):
     try:
         with create_connection() as connection:
             with connection.cursor() as cursor:
-                for service_id in range(1, num_services + 1):
-                    service_data = generate_service_data(service_id)
+                for services in range(1, num_services + 1):
+                    service_data = generate_service_data()
                     cursor.execute('''
-                        INSERT INTO services (service_id, service_name, description, additional_info, price, image)
-                        VALUES (%s, %s, %s, %s, %s, %s)
+                        INSERT INTO services (service_name, description, additional_info, price, image)
+                        VALUES (%s, %s, %s, %s, %s)
                     ''', (
-                        service_data['service_id'],
                         service_data['service_name'],
                         service_data['description'],
                         service_data['additional_info'],

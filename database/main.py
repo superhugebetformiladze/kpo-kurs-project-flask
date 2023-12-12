@@ -17,7 +17,7 @@ if __name__ == "__main__":
     create_database(db_config)
     drop_all_tables()
     create_tables()
-    insert_services_data(10)
+    insert_services_data(1)
 
 
 
