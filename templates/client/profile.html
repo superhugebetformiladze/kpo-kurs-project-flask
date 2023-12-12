@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="{{ url_for('client.index') }}">TechCenter</a>
+    </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4 mb-4">
+    {% if user_info %}
+        <h2>Профиль пользователя:</h2>
+        <ul>
+            <li><strong>Логин:</strong> {{ user_info.login }}</li>
+            <li><strong>Администратор:</strong> {% if user_info.is_admin %}Да{% else %}Нет{% endif %}</li>
+        </ul>
+    {% else %}
+        <p>Данные пользователя недоступны.</p>
+    {% endif %}
+</div>
+
+{% endblock %}

@@ -31,7 +31,7 @@ body {
 }
 
 .navbar:hover {
-    width: 18rem;
+    width: 19rem;
 }
 
 .logo {
@@ -63,7 +63,7 @@ body {
 }
 
 .nav-links a:hover {
-    background-color: #61892F;
+    background-color: #769253;
 }
 
 .nav-links a:hover .text{

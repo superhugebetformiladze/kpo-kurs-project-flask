@@ -17,3 +17,16 @@ def get_db_config():
     }
 
     return db_config
+
+def get_app_config():
+    current_directory = os.path.dirname(os.path.realpath(__file__))
+    config_path = os.path.join(current_directory, '..', 'config', 'config.cfg')
+
+    config = configparser.ConfigParser()
+    config.read(config_path)
+
+    app_config = {
+        'secret_key': config.get('APP', 'SECRET_KEY')
+    }
+
+    return app_config

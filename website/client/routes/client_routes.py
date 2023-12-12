@@ -3,6 +3,8 @@ import random
 
 import sys
 import os
+
+from flask_login import current_user
 current_directory = os.path.dirname(os.path.realpath(__file__))
 root_directory = os.path.abspath(os.path.join(current_directory, '..'))
 sys.path.append(root_directory)
@@ -36,4 +38,16 @@ def service_detail(service_id):
 def services():
     all_services = read_services()
     return render_template('client/services.html', services=all_services)
+
+@client_bp.route('/profile')
+def profile():
+    if current_user.is_authenticated:
+        user_info = {
+            'login': current_user.get_id(),
+            'is_admin': current_user.is_admin
+        }
+        return render_template('client/profile.html', user_info)
+    return render_template('client/profile.html', user_info=None)
+
+
 

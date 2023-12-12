@@ -66,3 +66,30 @@ def insert_services_data(num_services):
         print(f"{num_services} данные успешно добавлены в таблицу services.")
     except psycopg2.Error as e:
         print(f"Ошибка при вставке данных в таблицу services: {e}")
+
+def generate_admin_data():
+    admin_data = {
+        'login': 'admin',
+        'password': 'admin1234',
+        'is_admin': True
+    }
+
+    return admin_data
+
+def insert_admin_data():
+    try:
+        with create_connection() as connection:
+            with connection.cursor() as cursor:
+                admin_data = generate_admin_data()
+                cursor.execute('''
+                    INSERT INTO users (login, password, is_admin)
+                    VALUES (%s, %s, %s)
+                ''', (
+                    admin_data['login'],
+                    admin_data['password'],
+                    admin_data['is_admin']
+                ))
+
+        print("Администратор успешно создан")
+    except psycopg2.Error as e:
+        print(f"Ошибка при вставке данных в таблицу users: {e}")

@@ -80,7 +80,8 @@ def create_tables():
                     CREATE TABLE IF NOT EXISTS users (
                         user_id SERIAL PRIMARY KEY,
                         login VARCHAR(100) NOT NULL,
-                        password VARCHAR(255) NOT NULL
+                        password VARCHAR(255) NOT NULL,
+                        is_admin BOOLEAN DEFAULT FALSE
                     )
                 ''')
 
