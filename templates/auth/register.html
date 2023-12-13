@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,9 +8,19 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
     <title>ПрофиМастер</title>
     <link rel="shortcut icon" href="/static/icons/main-page/logo-profi-master-green.svg">
-    <link rel="stylesheet" href="/static/css/auth/style.css"/>
+    <link rel="stylesheet" href="/static/css/auth/style.css" />
 </head>
+
 <body>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <ul class="messages">
+        {% for category, message in messages %}
+        <li class="{{ category }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
     <div class="back">
         <form class="login-form" id="login-form" method="POST">
             <div class="text">Личный Кабинет</div>
@@ -27,4 +38,5 @@
         </form>
     </div>
 </body>
+
 </html>

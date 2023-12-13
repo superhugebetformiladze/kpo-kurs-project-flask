@@ -10,6 +10,7 @@ root_directory = os.path.abspath(os.path.join(current_directory, '..'))
 sys.path.append(root_directory)
 
 from utils.database_utils import create_connection
+from enums.roles import Role
 from website.authorization.logic.authorization_logic import create_user, hash_password
 
 fake = Faker()
@@ -68,31 +69,30 @@ def insert_services_data(num_services):
     except psycopg2.Error as e:
         print(f"Ошибка при вставке данных в таблицу services: {e}")
 
+def generate_user_data():
+    user_data = {
+        'login': fake.user_name(),
+        'password': '1234',
+        'role': Role.USER,
+    }
+    return user_data
+
 def generate_admin_data():
     admin_data = {
         'login': 'admin',
         'password': 'admin1234',
-        'is_admin': True
+        'role': Role.ADMIN,
     }
+    return admin_data
 
-    hashed_password = hash_password(admin_data['password'])
+def create_user_with_role(login, password, role):
+    hashed_password = hash_password(password)
+    create_user(login, hashed_password, role.value)
 
-    create_user(admin_data['login'], hashed_password, admin_data['is_admin'])
+def create_admin():
+    admin_data = generate_admin_data()
+    create_user_with_role(admin_data['login'], admin_data['password'], admin_data['role'])
 
-def insert_admin_data():
-    try:
-        with create_connection() as connection:
-            with connection.cursor() as cursor:
-                admin_data = generate_admin_data()
-                cursor.execute('''
-                    INSERT INTO users (login, password, is_admin)
-                    VALUES (%s, %s, %s)
-                ''', (
-                    admin_data['login'],
-                    admin_data['password'],
-                    admin_data['is_admin']
-                ))
-
-        print("Администратор успешно создан")
-    except psycopg2.Error as e:
-        print(f"Ошибка при вставке данных в таблицу users: {e}")
+def create_simple_user():
+    user_data = generate_user_data()
+    create_user_with_role(user_data['login'], user_data['password'], user_data['role'])

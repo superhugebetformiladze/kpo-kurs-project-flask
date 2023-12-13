@@ -42,10 +42,10 @@ def services():
 @client_bp.route('/profile')
 def profile():
     user_info = {
-        'login': current_user.get_id(),
-        'is_admin': current_user.is_admin
+        'id': current_user.get_id(),
+        'login': current_user.login,
+        'role': current_user.role,
     }
-    print(user_info)
     return render_template('client/profile.html', user_info=user_info)
 
 

@@ -1,6 +1,6 @@
 from database_utils import create_database, database_exists
 from tables_utils import drop_all_tables, create_tables
-from generate_data import insert_services_data, insert_admin_data, generate_admin_data
+from generate_data import insert_services_data, create_admin, create_simple_user
 
 import sys
 import os
@@ -18,7 +18,9 @@ if __name__ == "__main__":
     drop_all_tables()
     create_tables()
     insert_services_data(10)
-    generate_admin_data()
+    create_admin()
+    create_simple_user()
+    create_simple_user()
 
 
 

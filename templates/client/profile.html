@@ -14,8 +14,8 @@
     {% if user_info %}
         <h2>Профиль пользователя:</h2>
         <ul>
-            <li><strong>Логин:</strong> {{ user_info.login }}</li>
-            <li><strong>Администратор:</strong> {% if user_info.is_admin %}Да{% else %}Нет{% endif %}</li>
+            <li><strong>Логин:</strong> {{ user_info.login }} </li>
+            <li><strong>Роль:</strong> {{ user_info.role }} </li>
         </ul>
     {% else %}
         <p>Данные пользователя недоступны.</p>

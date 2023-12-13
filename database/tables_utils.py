@@ -81,7 +81,7 @@ def create_tables():
                         user_id SERIAL PRIMARY KEY,
                         login VARCHAR(100) NOT NULL,
                         password VARCHAR(255) NOT NULL,
-                        is_admin BOOLEAN DEFAULT FALSE
+                        role VARCHAR(50) DEFAULT 'user' NOT NULL
                     )
                 ''')
 
