@@ -4,16 +4,22 @@ import random
 import sys
 import os
 
-from flask_login import current_user
+from flask_login import current_user, login_required
+
 current_directory = os.path.dirname(os.path.realpath(__file__))
-root_directory = os.path.abspath(os.path.join(current_directory, '..'))
+root_directory = os.path.abspath(os.path.join(current_directory, ".."))
 sys.path.append(root_directory)
 
-from logic.service_logic import read_all_services_exclude, read_services, read_service_by_id
+from logic.service_logic import (
+    read_all_services_exclude,
+    read_services,
+    read_service_by_id,
+)
 
-client_bp = Blueprint('client', __name__)
+client_bp = Blueprint("client", __name__)
 
-@client_bp.route('/')
+
+@client_bp.route("/")
 def index():
     all_services = read_services()
 
@@ -22,9 +28,10 @@ def index():
     else:
         random_services = all_services
 
-    return render_template('client/index.html', services=random_services)
+    return render_template("client/index.html", services=random_services)
 
-@client_bp.route('/service/<int:service_id>')
+
+@client_bp.route("/service/<int:service_id>")
 def service_detail(service_id):
     service = read_service_by_id(service_id)
     all_services = read_all_services_exclude(service_id)
@@ -32,21 +39,23 @@ def service_detail(service_id):
         random_services = random.sample(all_services, 3)
     else:
         random_services = all_services
-    return render_template('client/service-detail.html', service=service, services=random_services)
+    return render_template(
+        "client/service-detail.html", service=service, services=random_services
+    )
 
-@client_bp.route('/services')
+
+@client_bp.route("/services")
 def services():
     all_services = read_services()
-    return render_template('client/services.html', services=all_services)
+    return render_template("client/services.html", services=all_services)
 
-@client_bp.route('/profile')
+
+@client_bp.route("/profile")
+@login_required
 def profile():
     user_info = {
-        'id': current_user.get_id(),
-        'login': current_user.login,
-        'role': current_user.role,
+        "id": current_user.get_id(),
+        "login": current_user.login,
+        "role": current_user.role,
     }
-    return render_template('client/profile.html', user_info=user_info)
-
-
-
+    return render_template("client/profile.html", user_info=user_info)

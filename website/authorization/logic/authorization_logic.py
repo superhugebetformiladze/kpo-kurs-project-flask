@@ -89,6 +89,7 @@ def get_hashed_password(login):
         print(f"Ошибка при получении пароля пользователя: {e}")
         return None
 
+
 def load_user_info_from_database(login):
     try:
         with create_connection() as connection:
@@ -110,6 +111,7 @@ def load_user_info_from_database(login):
     except psycopg2.Error as e:
         print(f"Ошибка при загрузке информации о пользователе из базы данных: {e}")
         return None
+
 
 def load_user_info_from_database_with_id(user_id):
     try:

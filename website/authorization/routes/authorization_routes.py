@@ -3,7 +3,7 @@ from flask import Blueprint, flash, redirect, render_template, request, url_for
 import sys
 import os
 
-from flask_login import LoginManager, current_user, login_user, logout_user
+from flask_login import LoginManager, current_user, login_required, login_user, logout_user
 
 current_directory = os.path.dirname(os.path.realpath(__file__))
 root_directory = os.path.abspath(os.path.join(current_directory, ".."))
@@ -17,7 +17,7 @@ from logic.authorization_logic import (
     hash_password,
     is_login_exists,
     load_user_info_from_database,
-    load_user_info_from_database_with_id
+    load_user_info_from_database_with_id,
 )
 
 auth_bp = Blueprint("auth", __name__)
@@ -73,7 +73,7 @@ def login():
             login_user(user)
             print("Успешный вход")
             user_info = {"login": current_user.get_id(), "role": current_user.role}
-            return redirect("profile")
+            return redirect(url_for("client.index"))
         else:
             print("Неверные учетные данные")
             error_message = "Неверные учетные данные. Пожалуйста, попробуйте снова."
@@ -83,7 +83,8 @@ def login():
 
 
 @auth_bp.route("/logout")
+@login_required
 def logout():
     logout_user()
     print("Успешный выход")
-    return redirect(url_for("auth.login"))
+    return redirect(url_for("client.index"))

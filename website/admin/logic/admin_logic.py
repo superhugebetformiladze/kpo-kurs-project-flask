@@ -1,3 +1,4 @@
+from flask_login import current_user
 import psycopg2
 
 import sys
@@ -8,6 +9,10 @@ root_directory = os.path.abspath(os.path.join(current_directory, ".."))
 sys.path.append(root_directory)
 
 from utils.database_utils import create_connection
+
+
+def is_admin():
+    return current_user.role == "admin" if current_user.is_authenticated else False
 
 
 def create_service(service_data):
@@ -58,7 +63,7 @@ def update_service(service_id, new_service_data):
                         service_id,
                     ),
                 )
-                
+
         print("Услуга успешно обновлена.")
     except psycopg2.Error as e:
         print(f"Ошибка при обновлении услуги: {e}")
@@ -68,11 +73,14 @@ def delete_service(service_id):
     try:
         with create_connection() as connection:
             with connection.cursor() as cursor:
-                cursor.execute('''
+                cursor.execute(
+                    """
                     DELETE FROM services
                     WHERE service_id = %s
-                ''', (service_id,))
-                
+                """,
+                    (service_id,),
+                )
+
         print("Услуга успешно удалена.")
     except psycopg2.Error as e:
         print(f"Ошибка при удалении услуги: {e}")
