@@ -18,13 +18,16 @@ from logic.service_logic import (
     read_services,
     read_service_by_id,
 )
+from logic.service_request_logic import save_request, read_requests_by_user_id
+
 from utils.config_utils import get_telegram_config
 
 client_bp = Blueprint("client", __name__)
 
 telegram_config = get_telegram_config()
-bot = Bot(token=telegram_config['bot_token'])
-chat_id = telegram_config['chat_id']
+bot = Bot(token=telegram_config["bot_token"])
+chat_id = telegram_config["chat_id"]
+
 
 @client_bp.route("/", methods=["POST", "GET"])
 def index():
@@ -34,22 +37,35 @@ def index():
         car_model = request.form["car_model"]
         service_name = request.form["service_name"]
         phone_number = request.form["phone_number"]
-        message_text = f"Новая заявка!\n\n" \
-                        f"Имя: {client_name}\n" \
-                        f"Марка автомобиля: {car_brand}\n" \
-                        f"Модель автомобиля: {car_model}\n" \
-                        f"Услуга: {service_name}\n" \
-                        f"Номер телефона: {phone_number}"
-        
-        print("chat id:",chat_id)
-        print("bot:", bot)
-        print("token:", telegram_config['bot_token'])
-        print("message text:", message_text)
+
+        user_id = current_user.id
+        service_id = 1
+
+        request_data = {
+            "client_name": client_name,
+            "car_brand": car_brand,
+            "car_model": car_model,
+            "service_name": service_name,
+            "phone_number": phone_number,
+            "service_id": service_id,
+            "user_id": user_id,
+        }
+
+        save_request(request_data)
+
+        message_text = (
+            f"Новая заявка!\n\n"
+            f"Имя: {client_name}\n"
+            f"Марка автомобиля: {car_brand}\n"
+            f"Модель автомобиля: {car_model}\n"
+            f"Услуга: {service_name}\n"
+            f"Номер телефона: {phone_number}"
+        )
 
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
         loop.run_until_complete(bot.send_message(chat_id, message_text))
-                    
+
         return redirect(url_for("client.index"))
     else:
         all_services = read_services()
@@ -59,7 +75,9 @@ def index():
         else:
             random_services = all_services
 
-    return render_template("client/index.html", services=random_services, all_services=all_services)
+    return render_template(
+        "client/index.html", services=random_services, all_services=all_services
+    )
 
 
 @client_bp.route("/service/<int:service_id>")
@@ -85,8 +103,9 @@ def services():
 @login_required
 def profile():
     user_info = {
-        "id": current_user.get_id(),
+        "id": current_user.id,
         "login": current_user.login,
         "role": current_user.role,
     }
-    return render_template("client/profile.html", user_info=user_info)
+    service_requests = read_requests_by_user_id(user_info["id"])
+    return render_template("client/profile.html", user_info=user_info, requests=service_requests)

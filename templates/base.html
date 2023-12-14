@@ -35,6 +35,11 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url_for('client.profile') }}">Профиль</a>
                         </li>
+                        {% if current_user.role == 'admin' %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url_for('admin.admin_home') }}">Админ Панель</a>
+                            </li>
+                    {% endif %}
                     {% else %}
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url_for('auth.login') }}">Вход</a>

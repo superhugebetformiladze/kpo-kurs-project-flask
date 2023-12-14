@@ -4,6 +4,30 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <div class="container">
         <a class="navbar-brand" href="{{ url_for('client.index') }}">TechCenter</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                {% if current_user.is_authenticated %}
+                    {% if current_user.role == 'admin' %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('admin.admin_home') }}">Админ Панель</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('auth.logout') }}">Выход</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('auth.logout') }}">
+                                <button type="button" class="btn btn-primary">Выход</button>
+                            </a>
+                        </li>
+                    {% endif %}
+                {% else %}
+                {% endif %}
+            </ul>
+        </div>
     </div>
 </nav>
 {% endblock %}
@@ -20,9 +44,27 @@
     {% else %}
         <p>Данные пользователя недоступны.</p>
     {% endif %}
-    <a href="{{ url_for('auth.logout') }}">
-        <button type="button" class="btn btn-primary">Выход</button>
-    </a>
+
+    {% if requests %}
+    <h2>Список заявок:</h2>
+    <div class="list-group">
+        {% for request in requests %}
+            <div class="list-group-item">
+                <h5 class="mb-1">{{ request[0] }}</h5>
+                <p class="mb-1">
+                    <strong>Марка автомобиля:</strong> {{ request[1] }}<br>
+                    <strong>Модель автомобиля:</strong> {{ request[2] }}<br>
+                    <strong>Услуга:</strong> {{ request[3] }}<br>
+                    <strong>Телефон:</strong> {{ request[4] }}
+                </p>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>У вас нет заявок.</p>
+{% endif %}
+
 </div>
 
 {% endblock %}
+

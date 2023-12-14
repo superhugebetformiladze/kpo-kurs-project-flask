@@ -26,7 +26,12 @@
                 <label for="password" class="label-form">Пароль</label>
             </div>
             <input type="submit" class="button-form" value="Войти">
+            <div style="width: 100%; display: flex; justify-content: center; margin-top: 1rem;">
+                <a href="{{ url_for('auth.register') }}" style="text-decoration: none; color: rgb(170, 170, 170);">Регистрация</a>
+            </div>
+
         </form>
+
     </div>
 </body>
 
