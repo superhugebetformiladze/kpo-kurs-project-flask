@@ -96,9 +96,7 @@ def create_tables():
                         car_model VARCHAR(255) NOT NULL,
                         service_name VARCHAR(255) NOT NULL,
                         phone_number VARCHAR(20) NOT NULL,
-                        service_id INTEGER,
                         user_id INTEGER,
-                        FOREIGN KEY (service_id) REFERENCES services(service_id) ON DELETE CASCADE,
                         FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
                     )
                 """

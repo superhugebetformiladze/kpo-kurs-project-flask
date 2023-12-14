@@ -84,3 +84,67 @@ def delete_service(service_id):
         print("Услуга успешно удалена.")
     except psycopg2.Error as e:
         print(f"Ошибка при удалении услуги: {e}")
+
+def read_users():
+    try:
+        with create_connection() as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(
+                    """
+                    SELECT user_id, login, password, role FROM users
+                """
+                )
+                users = cursor.fetchall()
+
+        return users
+    except psycopg2.Error as e:
+        print(f"Ошибка при получении списка пользователей: {e}")
+        return None
+
+def delete_user(user_id):
+    try:
+        with create_connection() as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(
+                    """
+                    DELETE FROM users
+                    WHERE user_id = %s
+                """,
+                    (user_id,),
+                )
+
+        print("Пользователь успешно удален.")
+    except psycopg2.Error as e:
+        print(f"Ошибка при удалении пользователя: {e}")
+
+def read_requests():
+    try:
+        with create_connection() as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(
+                    """
+                    SELECT service_request_id, client_name, car_brand, car_model, service_name, phone_number, user_id FROM service_requests
+                """
+                )
+                requests = cursor.fetchall()
+
+        return requests
+    except psycopg2.Error as e:
+        print(f"Ошибка при получении списка заявок: {e}")
+        return None
+
+def delete_request(request_id):
+    try:
+        with create_connection() as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(
+                    """
+                    DELETE FROM service_requests
+                    WHERE service_request_id = %s
+                """,
+                    (request_id,),
+                )
+
+        print("Заявка успешно удалена.")
+    except psycopg2.Error as e:
+        print(f"Ошибка при удалении заявки: {e}")

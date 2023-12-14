@@ -16,8 +16,8 @@ def save_request(request_data):
             with connection.cursor() as cursor:
                 cursor.execute(
                     """
-                    INSERT INTO service_requests (client_name, car_brand, car_model, service_name, phone_number, service_id, user_id)
-                    VALUES (%s, %s, %s, %s, %s, %s, %s)
+                    INSERT INTO service_requests (client_name, car_brand, car_model, service_name, phone_number, user_id)
+                    VALUES (%s, %s, %s, %s, %s, %s)
                     """,
                     (
                         request_data["client_name"],
@@ -25,7 +25,6 @@ def save_request(request_data):
                         request_data["car_model"],
                         request_data["service_name"],
                         request_data["phone_number"],
-                        request_data["service_id"],
                         request_data["user_id"],
                     ),
                 )

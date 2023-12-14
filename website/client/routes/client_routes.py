@@ -39,7 +39,6 @@ def index():
         phone_number = request.form["phone_number"]
 
         user_id = current_user.id
-        service_id = 1
 
         request_data = {
             "client_name": client_name,
@@ -47,7 +46,6 @@ def index():
             "car_model": car_model,
             "service_name": service_name,
             "phone_number": phone_number,
-            "service_id": service_id,
             "user_id": user_id,
         }
 

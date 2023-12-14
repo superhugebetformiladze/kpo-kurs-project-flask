@@ -10,7 +10,16 @@ root_directory = os.path.abspath(os.path.join(current_directory, ".."))
 sys.path.append(root_directory)
 
 from website.client.logic.service_logic import read_service_by_id, read_services
-from logic.admin_logic import create_service, delete_service, is_admin, update_service
+from logic.admin_logic import (
+    create_service,
+    delete_service,
+    is_admin,
+    update_service,
+    read_users,
+    delete_user,
+    read_requests,
+    delete_request,
+)
 
 admin_bp = Blueprint("admin", __name__)
 
@@ -19,7 +28,6 @@ admin_bp = Blueprint("admin", __name__)
 @login_required
 def admin_home():
     if not is_admin():
-        print("Нет доступа в админ панель")
         return redirect(url_for("client.index"))
     current_page = "admin"
     return render_template("admin/admin-home.html", current_page=current_page)
@@ -29,9 +37,8 @@ def admin_home():
 @login_required
 def admin_services():
     if not is_admin():
-        print("Нет доступа в админ панель")
         return redirect(url_for("client.index"))
-    current_page = "products"
+    current_page = "services"
     services = read_services()
     return render_template(
         "admin/admin-services.html", services=services, current_page=current_page
@@ -42,7 +49,6 @@ def admin_services():
 @login_required
 def admin_create_service():
     if not is_admin():
-        print("Нет доступа в админ панель")
         return redirect(url_for("client.index"))
     if request.method == "POST":
         service_name = request.form["service_name"]
@@ -88,7 +94,6 @@ def admin_create_service():
 @login_required
 def admin_delete_service(service_id):
     if not is_admin():
-        print("Нет доступа в админ панель")
         return redirect(url_for("client.index"))
     delete_service(service_id)
     return redirect(url_for("admin.admin_services"))
@@ -98,7 +103,6 @@ def admin_delete_service(service_id):
 @login_required
 def admin_edit_service(service_id):
     if not is_admin():
-        print("Нет доступа в админ панель")
         return redirect(url_for("client.index"))
     edit_mode = True
     service_data = read_service_by_id(service_id)
@@ -149,3 +153,45 @@ def admin_edit_service(service_id):
     return render_template(
         "admin/admin-service-edit.html", edit_mode=edit_mode, service_data=service_data
     )
+
+
+@admin_bp.route("/admin/users")
+@login_required
+def admin_users():
+    if not is_admin():
+        return redirect(url_for("client.index"))
+    current_page = "users"
+    users = read_users()
+    return render_template(
+        "admin/admin-users.html", users=users, current_page=current_page
+    )
+
+
+@admin_bp.route("/admin/user/delete/<int:user_id>", methods=["GET"])
+@login_required
+def admin_delete_user(user_id):
+    if not is_admin():
+        return redirect(url_for("client.index"))
+    delete_user(user_id)
+    return redirect(url_for("admin.admin_users"))
+
+
+@admin_bp.route("/admin/requests")
+@login_required
+def admin_requests():
+    if not is_admin():
+        return redirect(url_for("client.index"))
+    current_page = "requests"
+    requests = read_requests()
+    return render_template(
+        "admin/admin-requests.html", requests=requests, current_page=current_page
+    )
+
+
+@admin_bp.route("/admin/request/delete/<int:request_id>", methods=["GET"])
+@login_required
+def admin_delete_request(request_id):
+    if not is_admin():
+        return redirect(url_for("client.index"))
+    delete_request(request_id)
+    return redirect(url_for("admin.admin_requests"))

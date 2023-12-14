@@ -75,9 +75,9 @@ def login():
             user_info = {"login": current_user.get_id(), "role": current_user.role}
             return redirect(url_for("client.index"))
         else:
-            print("Неверные учетные данные")
-            error_message = "Неверные учетные данные. Пожалуйста, попробуйте снова."
-            return render_template("auth/login.html", error=error_message)
+            error_message = "Неверные учетные данные. Пожалуйста, проверьте логин и пароль."
+            flash(error_message, "error")
+            return render_template("auth/login.html")
     else:
         return render_template("auth/login.html")
 

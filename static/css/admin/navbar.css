@@ -31,7 +31,7 @@ body {
 }
 
 .navbar:hover {
-    width: 19rem;
+    width: 22rem;
 }
 
 .logo {
@@ -82,7 +82,7 @@ body {
 .navbar:hover .nav-links a .text {
     opacity: 1;
     margin-left: 1rem;
-    width: 11rem;
+    width: 15rem;
 }
 
 .nav-links a svg {
