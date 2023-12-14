@@ -64,7 +64,11 @@
                         <input type="text" class="input" name="client_name" placeholder="Ваше имя">
                         <input type="text" class="input" name="car_brand" placeholder="Марка автомобил">
                         <input type="text" class="input" name="car_model" placeholder="Модель автомобиля">
-                        <input type="text" class="input" name="service_name" placeholder="Услуга">
+                        <select class="input" name="service_name">
+                            {% for service in all_services %}
+                                <option value="{{ service[1] }}">{{ service[1] }}</option>
+                            {% endfor %}
+                        </select>
                         <input type="text" class="input" name="phone_number" placeholder="Номер телефона">
                         
                         <button type="submit" class="btn">Отправить заявку</button>

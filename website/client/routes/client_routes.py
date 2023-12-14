@@ -59,7 +59,7 @@ def index():
         else:
             random_services = all_services
 
-    return render_template("client/index.html", services=random_services)
+    return render_template("client/index.html", services=random_services, all_services=all_services)
 
 
 @client_bp.route("/service/<int:service_id>")
