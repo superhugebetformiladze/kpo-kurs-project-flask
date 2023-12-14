@@ -30,3 +30,17 @@ def get_app_config():
     }
 
     return app_config
+
+def get_telegram_config():
+    current_directory = os.path.dirname(os.path.realpath(__file__))
+    config_path = os.path.join(current_directory, '..', 'config', 'config.cfg')
+
+    config = configparser.ConfigParser()
+    config.read(config_path)
+
+    telegram_config = {
+        'bot_token': config.get('TELEGRAM', 'BOT_TOKEN'),
+        'chat_id': config.get('TELEGRAM', 'CHAT_ID')
+    }
+
+    return telegram_config
