@@ -13,7 +13,6 @@
 <body>
     {% block navbar %}
     <div class="navbar">
-        <div class="logo"></div>
         <ul class="nav-links">
             <li><a href="{{ url_for('admin.admin_home') }}" class="{% if current_page == 'admin' %}active{% endif %}">
                 <svg id="home" width="40" height="41" viewBox="0 0 40 41" fill="none" xmlns="http://www.w3.org/2000/svg">
