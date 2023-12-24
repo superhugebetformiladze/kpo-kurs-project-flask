@@ -71,7 +71,6 @@ def login():
         if hashed_password and check_password(hashed_password, password):
             user = User(user_info["user_id"], login, user_info["role"])
             login_user(user)
-            print("Успешный вход")
             user_info = {"login": current_user.get_id(), "role": current_user.role}
             return redirect(url_for("client.index"))
         else:
@@ -86,5 +85,4 @@ def login():
 @login_required
 def logout():
     logout_user()
-    print("Успешный выход")
     return redirect(url_for("client.index"))
